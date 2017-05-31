@@ -31,6 +31,7 @@ class Chisel
 
   def translate_paragraph
     paragraph = "<p>\n" + read_markdown[4] + " " + read_markdown[5] + "\n" + "</p>"
+    look_for_strong(paragraph)
   end
 
   def translate_text
@@ -39,12 +40,23 @@ class Chisel
 
   def look_for_strong(paragraph)
     if paragraph.include?("**")
-      paragraph.gsub("**", "<strong>")
+      paragraph = paragraph.gsub("**", "<strong>")
     else
       paragraph
     end
+    look_for_emphasis(paragraph)
+  end
+
+  def look_for_emphasis(paragraph)
+    if paragraph.include?("*")
+      paragraph = paragraph.gsub("*", "<em>")
+    else
+      paragraph
+    end
+    paragraph
   end
 end
 
 a = Chisel.new
-puts a.read_markdown
+a.read_markdown
+puts a.translate_paragraph
