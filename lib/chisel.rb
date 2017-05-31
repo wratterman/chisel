@@ -1,5 +1,10 @@
 class Chisel
 
+  def translate_text
+    read_markdown
+    translate_header + (read_markdown[1] * 2)+translate_second_header + (read_markdown[3] * 2) + translate_paragraph
+  end
+
   def read_markdown
     new_text = File.read('./my_input.markdown')
     new_text = new_text.split("\n")
@@ -34,10 +39,6 @@ class Chisel
     look_for_strong(paragraph)
   end
 
-  def translate_text
-    translate_header + translate_second_header + translate_paragraph
-  end
-
   def look_for_strong(paragraph)
     if paragraph.include?("**")
       paragraph = paragraph.gsub("**", "<strong>")
@@ -58,5 +59,4 @@ class Chisel
 end
 
 a = Chisel.new
-a.read_markdown
-puts a.translate_paragraph
+puts a.translate_text
