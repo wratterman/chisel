@@ -30,4 +30,18 @@ class ChiselTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_it_will_add_html_h2_header_to_second_header
+    a = Chisel.new
+    expected = "<h2>Chapter 1: The Beginning</h2>"
+    actual = a.translate_second_header
+
+    assert_equal expected, actual
+  end
+
+  def test_it_will_work_together
+    a = Chisel.new
+
+    assert_equal "<h1>My Life in Desserts</h1>", a.translate_header
+    assert_equal "<h2>Chapter 1: The Beginning</h2>", a.translate_second_header
+  end
 end
