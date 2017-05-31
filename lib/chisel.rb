@@ -2,7 +2,9 @@ class Chisel
 
   def translate_text
     read_markdown
-    translate_header + (read_markdown[1] * 2)+translate_second_header + (read_markdown[3] * 2) + translate_paragraph
+    message = translate_header + (read_markdown[1] * 2)+translate_second_header + (read_markdown[3] * 2) + translate_paragraph
+    write_html(message)
+    puts "Converted my_input.markdown (6 lines) to my_output.html (8 lines)"
   end
 
   def read_markdown
@@ -56,6 +58,13 @@ class Chisel
     end
     paragraph
   end
+
+  def write_html(message)
+    new_message = File.open('./my_output.html', "w")
+    new_message.write(message)
+    new_message.close
+  end
+
 end
 
 a = Chisel.new
