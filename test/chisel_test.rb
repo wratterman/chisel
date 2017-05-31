@@ -51,4 +51,30 @@ class ChiselTest < Minitest::Test
 
     assert_equal expected, actual
   end
+
+  def test_it_will_all_work_together_again
+    a = Chisel.new
+
+    assert_equal "<h1>My Life in Desserts</h1>", a.translate_header
+    assert_equal "<h2>Chapter 1: The Beginning</h2>", a.translate_second_header
+    assert_equal "<p>\n\"You just *have* to try the cheesecake,\" he said. \"Ever since it appeared in **Food & Wine** this place has been packed every night.\"\n</p>", a.translate_paragraph
+  end
+
+  def test_it_recognizes_single_asterisk_as_emphasis_not_strong
+    a = Chisel.new
+    expected = "<p>
+\"You just *have* to try the cheesecake,\" he said. \"Ever since it appeared in <strong>Food & Wine<strong> this place has been packed every night.\"
+</p>"
+    actual = a.look_for_strong("<p>\n\"You just *have* to try the cheesecake,\" he said. \"Ever since it appeared in **Food & Wine** this place has been packed every night.\"\n</p>")
+
+    assert_equal expected, actual
+  end
+
+  def test_it_would_translate_a_more_simple_version_of_strong
+    a = Chisel.new
+    expected = "Look mom <strong> No Hands <strong>"
+    actual = a.look_for_strong("Look mom ** No Hands **")
+
+    assert_equal expected, actual
+  end
 end

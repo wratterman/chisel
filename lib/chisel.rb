@@ -36,6 +36,14 @@ class Chisel
   def translate_text
     translate_header + translate_second_header + translate_paragraph
   end
+
+  def look_for_strong(paragraph)
+    if paragraph.include?("**")
+      paragraph.gsub("**", "<strong>")
+    else
+      paragraph
+    end
+  end
 end
 
 a = Chisel.new
